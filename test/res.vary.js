@@ -52,6 +52,23 @@ describe('res.vary()', function(){
     })
   })
 
+  describe('with a comma-separated string', function(){
+    it('feat_2_should set each listed field once', function (done) {
+      var app = express();
+
+      app.use(function (req, res) {
+        res.vary('Accept, Origin');
+        res.vary('Origin');
+        res.end();
+      });
+
+      request(app)
+      .get('/')
+      .expect('Vary', 'Accept, Origin')
+      .expect(200, done);
+    })
+  })
+
   describe('with a string', function(){
     it('should set the value', function (done) {
       var app = express();
