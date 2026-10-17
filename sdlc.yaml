@@ -1,0 +1,55 @@
+version: v1
+name: express
+traceability:
+  mode: warn
+release_naming:
+  format: semver-v-strict
+  mapping: R1
+stages:
+  planning:
+    require_milestone: true
+    require_issues_assigned: true
+  development:
+    branch: master
+    deploy_target: dev
+    required_checks:
+      - Lint
+      - Node.js 18 - ubuntu-latest
+      - Node.js 19 - ubuntu-latest
+      - Node.js 20 - ubuntu-latest
+      - Node.js 21 - ubuntu-latest
+      - Node.js 22 - ubuntu-latest
+      - Node.js 23 - ubuntu-latest
+      - Node.js 24 - ubuntu-latest
+      - Node.js 25 - ubuntu-latest
+      - Node.js 26 - ubuntu-latest
+      - Node.js 18 - windows-latest
+      - Node.js 19 - windows-latest
+      - Node.js 20 - windows-latest
+      - Node.js 21 - windows-latest
+      - Node.js 22 - windows-latest
+      - Node.js 23 - windows-latest
+      - Node.js 24 - windows-latest
+      - Node.js 25 - windows-latest
+      - Node.js 26 - windows-latest
+      - coverage
+      - Analyze (javascript)
+      - Analyze (actions)
+    required_reviewers:
+      min_approvals: 1
+  testing:
+    branch_pattern: master
+    required_checks:
+      - Analyze (javascript)
+      - Analyze (actions)
+    required_reviewers:
+      min_approvals: 1
+  evidencing:
+    required_reviewers:
+      min_approvals: 1
+  deployment:
+    target: production
+    deploy_workflow: .github/workflows/npm-publish.yml
+    required_checks: []
+    promotion: manual
+    requires_evidence_approval: true
